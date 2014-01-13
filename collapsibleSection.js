@@ -40,21 +40,15 @@
 			}
 			this.target = targetInfo.$;
 
-			var headingText = $elem.text();
-			var hideText = 'Hide ' + headingText;
-			var showText = 'Show ' + headingText;
-
-			this.anchor = $( anchorHtml )
-				.attr( 'aria-controls', targetInfo.id );
-
+			this.anchor = $( anchorHtml );
 			$elem.append( this.anchor );
 
 			var evtData = {
 					anchor: this.anchor,
 					elem: $elem,
 					isHover: false,
-					hideText: hideText,
-					showText: showText,
+					hideText: $elem.data( 'text-hide' ) || '',
+					showText: $elem.data( 'text-show' ) || '',
 					target: targetInfo.$
 				};
 
@@ -67,6 +61,7 @@
 				.trigger(  targetInfo.isVisible ? 'expand.vui': 'collapse.vui' );
 
 			this.anchor
+				.attr( 'aria-controls', targetInfo.id )
 				.on( 'focus', evtData, this._handleHover )
 				.on( 'blur', evtData, this._handleBlur );
 
@@ -84,6 +79,8 @@
 				.off( 'collapse.vui', this._handleCollapse )
 				.off( 'epxand.vui', this._handleExpand )
 				.off( 'click', this._handleClick )
+				.off( 'mouseover', this._handleHover )
+				.off( 'mouseout', this._handleBlur )
 				.removeClass( collapsedClassName );
 
 			this.anchor.remove();
