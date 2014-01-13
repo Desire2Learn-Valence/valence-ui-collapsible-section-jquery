@@ -22,6 +22,7 @@
 
 	var collapsedClassName = 'vui-heading-collapsible-collapsed';
 	var hoverClassName = 'vui-heading-collapsible-h';
+	var anchorHtml = '<a href="javascript:void(0);"><span class="vui-offscreen"></span></a>';
 
 	var $ = vui.$;
 
@@ -33,25 +34,18 @@
 
 			var $elem = this.element;
 
-			var targetId = $elem.attr( 'data-target' );
-			if( targetId === undefined ) {
+			var targetInfo = this._getTargetInfo( $elem );
+			if( targetInfo === null ) {
 				return;
 			}
-
-			var target = document.getElementById( targetId );
-			if( target === null ) {
-				return;
-			}
-
-			this.target = $( target );
-			var targetIsVisible = this.target.is(":visible");
+			this.target = targetInfo.$;
 
 			var headingText = $elem.text();
 			var hideText = 'Hide ' + headingText;
 			var showText = 'Show ' + headingText;
 
-			this.anchor = $( '<a href="javascript:void(0);"><span class="vui-offscreen"></span></a>' )
-				.attr( 'aria-controls', targetId );
+			this.anchor = $( anchorHtml )
+				.attr( 'aria-controls', targetInfo.id );
 
 			$elem.append( this.anchor );
 
@@ -61,7 +55,7 @@
 					isHover: false,
 					hideText: hideText,
 					showText: showText,
-					target: this.target
+					target: targetInfo.$
 				};
 
 			$elem
@@ -70,11 +64,15 @@
 				.on( 'click', this._handleClick )
 				.on( 'mouseover', evtData, this._handleHover )
 				.on( 'mouseout', evtData, this._handleBlur )
-				.trigger(  targetIsVisible ? 'expand.vui': 'collapse.vui' );
+				.trigger(  targetInfo.isVisible ? 'expand.vui': 'collapse.vui' );
 
 			this.anchor
 				.on( 'focus', evtData, this._handleHover )
 				.on( 'blur', evtData, this._handleBlur );
+
+			this.target
+				.addClass( 'vui-heading-collapsible-target' )
+				.on( 'transitionend', evtData, this._handleTransitionEnd );
 
 		},
 
@@ -90,7 +88,57 @@
 
 			this.anchor.remove();
 
-			this.target.removeAttr( 'aria-hidden' );
+			this.target
+				.off( 'transitionend', this.m_handleTransitionEnd )
+				.removeAttr( 'aria-hidden' )
+				.removeData( 'height' );
+
+		},
+
+		_getTargetInfo: function( $elem ) {
+
+			var targetId = $elem.attr( 'data-target' );
+			if( targetId === undefined ) {
+				return null;
+			}
+
+			var target = document.getElementById( targetId );
+			if( target === null ) {
+				return null;
+			}
+
+			var $target = $( target );
+
+			var targetInfo = {
+					$: $target,
+					id: targetId,
+					isVisible: $target.is(":visible")
+				};
+
+			// initially hidden, we need to calculate height
+			if( !targetInfo.isVisible ) {
+				$target.css(
+						{
+							position: 'absolute',
+							visibility: 'hidden',
+							display: 'block'
+						}
+					);
+			}
+
+			$target.data( 'height', $target.outerHeight( false ) );
+
+			if( !targetInfo.isVisible ) {
+				$target.css(
+						{
+							position: 'static',
+							visibility: 'visible',
+							display: 'none'
+						}
+					);
+			}
+
+			return targetInfo;
 
 		},
 
@@ -130,14 +178,20 @@
 				.attr( 'aria-expanded', false )
 				.find( '.vui-offscreen').text( evt.data.showText );
 
-			evt.data.target.slideUp(
-					function() {
-						$( this )
-							.addClass( 'vui-hidden' )
-							.removeAttr( 'style' )
-							.attr( 'aria-hidden', true );
-					}
-				);
+			var targetIsVisible = evt.data.target.is(":visible");
+			if( targetIsVisible ) {
+				var targetHeight = evt.data.target.outerHeight( false );
+				evt.data.target
+					.data( 'height', targetHeight )
+					.css( 'height', targetHeight + 'px' );
+			}
+
+			setTimeout( function() {
+					evt.data.target
+						.addClass( 'vui-heading-collapsible-target-collapsed' )
+						.attr( 'aria-hidden', true )
+						.css( 'height', '0' );
+				} );
 
 		},
 
@@ -154,14 +208,17 @@
 				.attr( 'aria-expanded', true )
 				.find( '.vui-offscreen' ).text( evt.data.hideText );
 
-			evt.data.target.slideDown(
-					function() {
-						$( this )
-							.removeClass( 'vui-hidden' )
-							.removeAttr( 'style' )
-							.attr( 'aria-hidden', false );
-					}
-				);
+			evt.data.target
+				.css( 'display', 'block' );
+
+			setTimeout( function() {
+				evt.data.target
+					.removeClass( 'vui-heading-collapsible-target-collapsed' )
+					.attr( 'aria-hidden', false )
+					.css( {
+							'height': evt.data.target.data('height') + 'px'
+						} );
+				} );
 
 		},
 
@@ -178,6 +235,22 @@
 					'class',
 					isCollapsed ? 'vui-icon-expand-h' : 'vui-icon-collapse-h'
 				);
+
+		},
+
+		_handleTransitionEnd: function( evt ) {
+
+			if( evt.originalEvent.propertyName != 'height' ) {
+				return;
+			}
+
+			var isCollapsed = evt.data.elem
+				.is('.vui-heading-collapsible-collapsed');
+			if( isCollapsed ) {
+				evt.data.target.css( 'display', 'none' );
+			} else {
+				evt.data.target.css( 'height', 'auto' );
+			}
 
 		}
 

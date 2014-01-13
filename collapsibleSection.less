@@ -1,4 +1,35 @@
+
+.vui-heading-collapsible-target {
+	overflow: hidden;
+	-o-transition-duration: 400ms;
+	-moz-transition-duration: 400ms;
+	-ms-transition-duration: 400ms;
+	-webkit-transition-duration: 400ms;
+	transition-duration: 400ms;
+	-o-transition-property: opacity, transform, margin-bottom, height;
+	-moz-transition-property: opacity, transform, margin-bottom, height;
+	-ms-transition-property: opacity, transform, margin-bottom, height;
+	-webkit-transition-property: opacity, transform, margin-bottom, height;
+	transition-property: opacity, transform, margin-bottom, height;
+	-o-transition-timing-function: ease-out;
+	-moz-transition-timing-function: ease-out;
+	-ms-transition-timing-function: ease-out;
+	-webkit-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+}
+
+.vui-heading-collapsible-target-collapsed {
+	.opacity( 0 );
+	margin-bottom: 0 !important;
+	-moz-transform: translateY( -10px );
+	-webkit-transform: translateY( -10px );
+	-ms-transform: translateY( -10px );
+	-o-transform: translateY( -10px );
+	transform: translateY( -10px );
+}
+
 .vui-heading-collapsible {
+	.user-select-none();
 	cursor: pointer;
 }
 
