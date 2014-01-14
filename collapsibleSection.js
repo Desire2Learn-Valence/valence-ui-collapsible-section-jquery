@@ -24,7 +24,6 @@
 	var targetClassName = 'vui-heading-collapsible-target';
 	var targetCollapsedClassName = 'vui-heading-collapsible-target-collapsed';
 	var hoverClassName = 'vui-heading-collapsible-h';
-	var anchorHtml = '<a href="javascript:void(0);"><span class="vui-offscreen"></span></a>';
 	var transitionEnd = 'transitionend webkitTransitionEnd';
 	var transitionClassName = 'vui-heading-collapsible-transition';
 
@@ -44,16 +43,19 @@
 			}
 			this.target = targetInfo.$;
 
-			this.anchor = $( anchorHtml );
-			$elem.append( this.anchor );
+			$elem.contents().wrapAll( '<a href="javascript:void(0);"></a>' );
+			this.anchor = $elem.find( 'a');
+
+			this.icon = $( '<span></span>' )
+				.css( 'vertical-align', 'middle' );
+			this.anchor.append( this.icon );
 
 			var evtData = {
 					anchor: this.anchor,
+					icon: this.icon,
 					elem: $elem,
 					isFirst: true,
 					isHover: false,
-					hideText: $elem.data( 'text-hide' ) || '',
-					showText: $elem.data( 'text-show' ) || '',
 					target: targetInfo.$
 				};
 
@@ -84,7 +86,8 @@
 				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui' )
 				.removeClass( collapsedClassName );
 
-			this.anchor.remove();
+			this.icon.remove();
+			this.anchor.contents().unwrap();
 
 			this.target
 				.removeClass(
@@ -154,7 +157,7 @@
 
 			evt.data.elem.removeClass( hoverClassName );
 
-			evt.data.anchor.attr(
+			evt.data.icon.attr(
 					'class',
 					isCollapsed ? 'vui-icon-expand' : 'vui-icon-collapse'
 				);
@@ -179,10 +182,11 @@
 			var className = evt.data.isHover ?
 				'vui-icon-expand-h' : 'vui-icon-expand';
 
+			evt.data.icon
+				.attr( 'class', className );
+
 			evt.data.anchor
-				.attr( 'class', className )
-				.attr( 'aria-expanded', false )
-				.find( '.vui-offscreen').text( evt.data.showText );
+				.attr( 'aria-expanded', false );
 
 			evt.data.target
 				.attr( 'aria-hidden', true );
@@ -211,10 +215,11 @@
 			evt.data.elem
 				.removeClass( collapsedClassName );
 
+			evt.data.icon
+				.attr( 'class', className );
+
 			evt.data.anchor
-				.attr( 'class', className )
-				.attr( 'aria-expanded', true )
-				.find( '.vui-offscreen' ).text( evt.data.hideText );
+				.attr( 'aria-expanded', true );
 			
 			evt.data.target
 				.css( 'display', 'block' )
@@ -245,7 +250,7 @@
 
 			evt.data.elem.addClass( hoverClassName );
 
-			evt.data.anchor.attr(
+			evt.data.icon.attr(
 					'class',
 					isCollapsed ? 'vui-icon-expand-h' : 'vui-icon-collapse-h'
 				);
