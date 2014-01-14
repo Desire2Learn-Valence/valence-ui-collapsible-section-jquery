@@ -1,15 +1,19 @@
 @import '../../core/core';
 
-.vui-heading-collapsible-target {
-	.transition-duration( 400ms );
+.vui-heading-collapsible-transition {
+	.transition-duration( 400ms );	
 	.transition-property( ~"opacity, transform, margin-bottom, height" );
 	.transition-timing-function( ease-out );
+}
+
+.vui-heading-collapsible-target {
 	overflow: hidden;
 }
 
 .vui-heading-collapsible-target-collapsed {
 	.opacity( 0 );
 	.transform-translate-y( -10px );
+	height: 0;
 	margin-bottom: 0 !important;
 }
 
