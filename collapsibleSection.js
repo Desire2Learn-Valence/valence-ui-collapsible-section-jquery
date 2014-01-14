@@ -60,9 +60,9 @@
 			$elem
 				.on( 'collapse.vui', evtData, this._handleCollapse )
 				.on( 'expand.vui', evtData, this._handleExpand )
-				.on( 'click', this._handleClick )
-				.on( 'mouseover', evtData, this._handleHover )
-				.on( 'mouseout', evtData, this._handleBlur )
+				.on( 'click.vui', this._handleClick )
+				.on( 'mouseover.vui', evtData, this._handleHover )
+				.on( 'mouseout.vui', evtData, this._handleBlur )
 				.trigger(  targetInfo.isVisible ? 'expand.vui': 'collapse.vui' );
 
 			this.anchor
@@ -81,11 +81,7 @@
 			var $elem = this.element;
 
 			$elem
-				.off( 'collapse.vui', this._handleCollapse )
-				.off( 'epxand.vui', this._handleExpand )
-				.off( 'click', this._handleClick )
-				.off( 'mouseover', this._handleHover )
-				.off( 'mouseout', this._handleBlur )
+				.off( 'collapse.vui expand.vui click.vui mouseover.vui mouseout.vui' )
 				.removeClass( collapsedClassName );
 
 			this.anchor.remove();
