@@ -23,6 +23,7 @@
 	var collapsedClassName = 'vui-heading-collapsible-collapsed';
 	var hoverClassName = 'vui-heading-collapsible-h';
 	var anchorHtml = '<a href="javascript:void(0);"><span class="vui-offscreen"></span></a>';
+	var transitionEnd = 'transitionend webkitTransitionEnd';
 
 	var $ = vui.$;
 
@@ -67,7 +68,7 @@
 
 			this.target
 				.addClass( 'vui-heading-collapsible-target' )
-				.on( 'transitionend', evtData, this._handleTransitionEnd );
+				.on( transitionEnd, evtData, this._handleTransitionEnd );
 
 		},
 
@@ -86,7 +87,7 @@
 			this.anchor.remove();
 
 			this.target
-				.off( 'transitionend', this.m_handleTransitionEnd )
+				.off( transitionEnd, this.m_handleTransitionEnd )
 				.removeAttr( 'aria-hidden' )
 				.removeData( 'height' );
 
@@ -188,17 +189,17 @@
 						.addClass( 'vui-heading-collapsible-target-collapsed' )
 						.attr( 'aria-hidden', true )
 						.css( 'height', '0' );
-				} );
+				}, 50 );
 
 		},
 
 		_handleExpand: function( evt ) {
 
-			$( this )
-				.removeClass( collapsedClassName );
-
 			var className = evt.data.isHover ?
 				'vui-icon-collapse-h' : 'vui-icon-collapse';
+
+			evt.data.elem
+				.removeClass( collapsedClassName );
 
 			evt.data.anchor
 				.attr( 'class', className )
@@ -206,16 +207,16 @@
 				.find( '.vui-offscreen' ).text( evt.data.hideText );
 
 			evt.data.target
-				.css( 'display', 'block' );
+				.css( 'display', 'block' )
+				.attr( 'aria-hidden', false );
 
 			setTimeout( function() {
 				evt.data.target
 					.removeClass( 'vui-heading-collapsible-target-collapsed' )
-					.attr( 'aria-hidden', false )
 					.css( {
 							'height': evt.data.target.data('height') + 'px'
 						} );
-				} );
+				}, 50 );
 
 		},
 
