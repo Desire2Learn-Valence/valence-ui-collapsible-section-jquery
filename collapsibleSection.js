@@ -58,12 +58,12 @@
 				};
 
 			$elem
-				.on( 'collapse.vui', evtData, this._handleCollapse )
-				.on( 'expand.vui', evtData, this._handleExpand )
+				.on( 'vui-collapse', evtData, this._handleCollapse )
+				.on( 'vui-expand', evtData, this._handleExpand )
 				.on( 'click.vui', this._handleClick )
 				.on( 'mouseover.vui', evtData, this._handleHover )
 				.on( 'mouseout.vui', evtData, this._handleBlur )
-				.trigger(  targetInfo.isVisible ? 'expand.vui': 'collapse.vui' );
+				.trigger(  targetInfo.isVisible ? 'vui-expand': 'vui-collapse' );
 
 			this.anchor
 				.attr( 'aria-controls', targetInfo.id )
@@ -81,7 +81,7 @@
 			var $elem = this.element;
 
 			$elem
-				.off( 'collapse.vui expand.vui click.vui mouseover.vui mouseout.vui' )
+				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui' )
 				.removeClass( collapsedClassName );
 
 			this.anchor.remove();
@@ -165,7 +165,7 @@
 
 			var isCollapsed = $( this )
 				.is('.vui-heading-collapsible-collapsed');
-			$( this ).trigger( isCollapsed ? 'expand.vui' : 'collapse.vui' );
+			$( this ).trigger( isCollapsed ? 'vui-expand' : 'vui-collapse' );
 
 		},
 
