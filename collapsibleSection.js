@@ -20,12 +20,15 @@
 		module.exports = vui;
 	}
 
-	var collapsedClassName = 'vui-heading-collapsible-collapsed';
-	var targetClassName = 'vui-heading-collapsible-target';
-	var targetCollapsedClassName = 'vui-heading-collapsible-target-collapsed';
-	var hoverClassName = 'vui-heading-collapsible-h';
+	var classNames = {
+			collapsed: 'vui-heading-collapsible-collapsed',
+			hover: 'vui-heading-collapsible-h',
+			target: 'vui-heading-collapsible-target',
+			targetCollapsed: 'vui-heading-collapsible-target-collapsed',
+			transition: 'vui-heading-collapsible-transition'
+		};
+
 	var transitionEnd = 'transitionend.vui webkitTransitionEnd.vui';
-	var transitionClassName = 'vui-heading-collapsible-transition';
 
 	var $ = vui.$;
 
@@ -73,7 +76,7 @@
 				.on( 'blur', evtData, this._handleBlur );
 
 			this.target
-				.addClass( targetClassName )
+				.addClass( classNames.target )
 				.on( transitionEnd, evtData, this._handleTransitionEnd );
 
 		},
@@ -84,16 +87,16 @@
 
 			$elem
 				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui' )
-				.removeClass( collapsedClassName );
+				.removeClass( classNames.collapsed );
 
 			this.icon.remove();
 			this.anchor.contents().unwrap();
 
 			this.target
 				.removeClass(
-					targetClassName + ' ' +
-					targetCollapsedClassName + ' ' +
-					transitionClassName
+					classNames.target + ' ' +
+					classNames.targetCollapsed + ' ' +
+					classNames.transition
 				)
 				.off( transitionEnd )
 				.removeAttr( 'aria-hidden' )
@@ -155,7 +158,7 @@
 			var isCollapsed = evt.data.elem
 				.is('.vui-heading-collapsible-collapsed');
 
-			evt.data.elem.removeClass( hoverClassName );
+			evt.data.elem.removeClass( classNames.hover );
 
 			evt.data.icon.attr(
 					'class',
@@ -177,7 +180,7 @@
 			evt.data.isFirst = false;
 
 			evt.data.elem
-				.addClass( collapsedClassName );
+				.addClass( classNames.collapsed );
 
 			var className = evt.data.isHover ?
 				'vui-icon-expand-h' : 'vui-icon-expand';
@@ -200,8 +203,11 @@
 			}
 
 			setTimeout( function() {
+					if( !evt.data ) {
+						return;
+					}
 					evt.data.target
-						.addClass( transitionClassName + ' ' + targetCollapsedClassName )
+						.addClass( classNames.transition + ' ' + classNames.targetCollapsed )
 						.css( 'height', '' );
 				}, 50 );
 
@@ -213,7 +219,7 @@
 				'vui-icon-collapse-h' : 'vui-icon-collapse';
 
 			evt.data.elem
-				.removeClass( collapsedClassName );
+				.removeClass( classNames.collapsed );
 
 			evt.data.icon
 				.attr( 'class', className );
@@ -231,9 +237,12 @@
 			}
 
 			setTimeout( function() {
+				if( !evt.data ) {
+					return;
+				}
 				evt.data.target
-					.addClass( transitionClassName )
-					.removeClass( targetCollapsedClassName )
+					.addClass( classNames.transition )
+					.removeClass( classNames.targetCollapsed )
 					.css( {
 							'height': evt.data.target.data('height') + 'px'
 						} );
@@ -248,7 +257,7 @@
 			var isCollapsed = evt.data.elem
 				.is('.vui-heading-collapsible-collapsed');
 
-			evt.data.elem.addClass( hoverClassName );
+			evt.data.elem.addClass( classNames.hover );
 
 			evt.data.icon.attr(
 					'class',
@@ -259,11 +268,11 @@
 
 		_handleTransitionEnd: function( evt ) {
 
-			if( evt.originalEvent.propertyName != 'height' ) {
+			if( !evt || !evt.originalEvent || evt.originalEvent.propertyName != 'height' ) {
 				return;
 			}
 
-			evt.data.target.removeClass( transitionClassName );
+			evt.data.target.removeClass( classNames.transition );
 
 			var isCollapsed = evt.data.elem
 				.is('.vui-heading-collapsible-collapsed');
