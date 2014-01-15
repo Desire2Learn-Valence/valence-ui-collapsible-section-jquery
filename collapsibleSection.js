@@ -24,7 +24,7 @@
 	var targetClassName = 'vui-heading-collapsible-target';
 	var targetCollapsedClassName = 'vui-heading-collapsible-target-collapsed';
 	var hoverClassName = 'vui-heading-collapsible-h';
-	var transitionEnd = 'transitionend webkitTransitionEnd';
+	var transitionEnd = 'transitionend.vui webkitTransitionEnd.vui';
 	var transitionClassName = 'vui-heading-collapsible-transition';
 
 	var $ = vui.$;
@@ -95,7 +95,7 @@
 					targetCollapsedClassName + ' ' +
 					transitionClassName
 				)
-				.off( transitionEnd, this.m_handleTransitionEnd )
+				.off( transitionEnd )
 				.removeAttr( 'aria-hidden' )
 				.removeData( 'height' );
 
