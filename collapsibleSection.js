@@ -49,8 +49,7 @@
 			$elem.contents().wrapAll( '<a href="javascript:void(0);"></a>' );
 			this.anchor = $elem.find( 'a');
 
-			this.icon = $( '<span></span>' )
-				.css( 'vertical-align', 'middle' );
+			this.icon = $( '<span></span>' );
 			this.anchor.append( this.icon );
 
 			var evtData = {

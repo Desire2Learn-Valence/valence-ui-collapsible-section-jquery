@@ -1,5 +1,16 @@
 @import '../../core/core';
 
+.vui-heading-collapsible {
+	.user-select-none();
+}
+.vui-heading-1.vui-heading-collapsible,
+.vui-heading-2.vui-heading-collapsible,
+.vui-heading-3.vui-heading-collapsible,
+.vui-heading-4.vui-heading-collapsible {
+	margin: 0 0 @headingBottomMargin 0;
+	padding-bottom: 0;
+}
+
 .vui-heading-collapsible-transition {
 	.transition-duration( 400ms );	
 	.transition-property( ~"opacity, transform, margin-bottom, height" );
@@ -18,15 +29,24 @@
 	margin-bottom: 0 !important;
 }
 
-.vui-heading-collapsible {
-	.user-select-none();
-}
-
 .vui-heading-collapsible > a {
-	color: inherit;
+	color: inherit !important;
 	display: block;
 	outline: none;
-	text-decoration: inherit;
+	text-decoration: none;
+}
+
+.vui-heading-collapsible > a > span {
+	margin-left: 3px;
+	vertical-align: middle;
+}
+[dir="rtl"] .vui-heading-collapsible > a > span {
+	margin-left: 0;
+	margin-right: 3px;
+}
+
+.vui-heading-collapsible > a:focus > span {
+	outline: 2px solid @linkColourOutlineFocus;
 }
 
 .vui-heading-collapsible-h {
