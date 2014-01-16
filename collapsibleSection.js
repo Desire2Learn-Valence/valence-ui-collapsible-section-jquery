@@ -36,36 +36,29 @@
 
 			var me = this;
 
-			var $elem = this.element;
-
-			var targetInfo = this._getTargetInfo( $elem );
+			var targetInfo = this._getTargetInfo();
 			if( targetInfo === null ) {
 				return;
 			}
-			this.target = targetInfo.$;
 
-			$elem.contents().wrapAll( '<a href="javascript:void(0);"></a>' );
-			this.anchor = $elem.find( 'a');
-
-			this.icon = $( '<span></span>' );
-			this.anchor.append( this.icon );
+			this._createAnchor();
 
 			var evtData = {
 					anchor: this.anchor,
 					icon: this.icon,
-					elem: $elem,
+					elem: this.element,
 					isFirst: true,
 					isHover: false,
-					target: targetInfo.$
+					target: this.target
 				};
 
-			$elem
+			this.element
 				.on( 'vui-collapse', evtData, this._handleCollapse )
 				.on( 'vui-expand', evtData, this._handleExpand )
 				.on( 'click.vui', this._handleClick )
 				.on( 'mouseover.vui', evtData, this._handleHover )
 				.on( 'mouseout.vui', evtData, this._handleBlur )
-				.trigger(  targetInfo.isVisible ? 'vui-expand': 'vui-collapse' );
+				.trigger( targetInfo.isVisible ? 'vui-expand': 'vui-collapse' );
 
 			this.anchor
 				.attr( 'aria-controls', targetInfo.id )
@@ -81,9 +74,7 @@
 
 		_destroy: function () {
 
-			var $elem = this.element;
-
-			$elem
+			this.element
 				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui' )
 				.removeClass( classNames.collapsed );
 
@@ -101,9 +92,21 @@
 
 		},
 
-		_getTargetInfo: function( $elem ) {
+		_createAnchor: function() {
 
-			var targetId = $elem.attr( 'data-target' );
+			this.element.contents().wrapAll(
+					'<a href="javascript:void(0);"></a>'
+				);
+			this.anchor = this.element.find( 'a');
+
+			this.icon = $( '<span></span>' );
+			this.anchor.append( this.icon );
+
+		},
+
+		_getTargetInfo: function() {
+
+			var targetId = this.element.attr( 'data-target' );
 			if( targetId === undefined ) {
 				return null;
 			}
@@ -113,17 +116,16 @@
 				return null;
 			}
 
-			var $target = $( target );
+			this.target = $( target );
 
 			var targetInfo = {
-					$: $target,
 					id: targetId,
-					isVisible: $target.is(":visible")
+					isVisible: this.target.is(":visible")
 				};
 
 			// initially hidden, we need to calculate height
 			if( !targetInfo.isVisible ) {
-				$target.css(
+				this.target.css(
 						{
 							position: 'absolute',
 							visibility: 'hidden',
@@ -132,10 +134,10 @@
 					);
 			}
 
-			$target.data( 'height', $target.outerHeight( false ) );
+			this.target.data( 'height', this.target.outerHeight( false ) );
 
 			if( !targetInfo.isVisible ) {
-				$target.css(
+				this.target.css(
 						{
 							position: 'static',
 							visibility: 'visible',
