@@ -74,7 +74,8 @@
 
 			this.target
 				.addClass( classNames.target )
-				.on( transitionEnd, evtData, this._handleTransitionEnd );
+				.on( transitionEnd, evtData, this._handleTransitionEnd )
+				.on( 'vui-expand', evtData, this._handleExpand );
 
 		},
 
@@ -94,7 +95,7 @@
 					classNames.target + ' ' +
 					classNames.transition
 				)
-				.off( transitionEnd )
+				.off( transitionEnd + ' vui-expand' )
 				.removeAttr( 'aria-hidden' )
 				.removeData( 'height' );
 
