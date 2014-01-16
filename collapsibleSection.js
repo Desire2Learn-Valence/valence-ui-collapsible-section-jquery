@@ -21,6 +21,7 @@
 	}
 
 	var classNames = {
+			changed: 'vui-heading-collapsible-changed',
 			collapsed: 'vui-heading-collapsible-collapsed',
 			target: 'vui-heading-collapsible-target',
 			transition: 'vui-heading-collapsible-transition'
@@ -66,9 +67,16 @@
 				.on( 'blur', evtData, this._handleBlur );
 
 			this.target
+				.vui_changeTracker()
 				.addClass( classNames.target )
 				.on( transitionEnd, evtData, this._handleTransitionEnd )
-				.on( 'vui-expand', evtData, this._handleExpand );
+				.on( 'vui-expand', evtData, this._handleExpand )
+				.on( 'vui-change vui-restore', function() {
+					me.anchor.toggleClass(
+							classNames.changed,
+							$( this ).vui_changeTracker('containsChanges')
+						);
+				} );
 
 		},
 
@@ -86,7 +94,7 @@
 					classNames.target + ' ' +
 					classNames.transition
 				)
-				.off( transitionEnd + ' vui-expand' )
+				.off( transitionEnd + ' vui-expand vui-change vui-restore' )
 				.removeAttr( 'aria-hidden' )
 				.removeData( 'height' );
 

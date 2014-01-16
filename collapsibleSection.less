@@ -12,7 +12,7 @@
 }
 
 .vui-heading-collapsible-transition {
-	.transition-duration( 400ms );	
+	.transition-duration( 400ms );
 	.transition-property( ~"opacity, transform, margin-bottom, height" );
 	.transition-timing-function( ease-out );
 }
@@ -39,6 +39,15 @@
 .vui-heading-collapsible > a:hover,
 .vui-heading-collapsible > a:focus {
 	background-color: #f6f6f6;
+}
+
+.vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"] {
+	background-color: @changedColour;
+}
+
+.vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:hover,
+.vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:focus {
+	background-color: @changedColourHover;
 }
 
 .vui-heading-collapsible > a > span {
