@@ -24,7 +24,6 @@
 			collapsed: 'vui-heading-collapsible-collapsed',
 			hover: 'vui-heading-collapsible-h',
 			target: 'vui-heading-collapsible-target',
-			targetCollapsed: 'vui-heading-collapsible-target-collapsed',
 			transition: 'vui-heading-collapsible-transition'
 		};
 
@@ -94,7 +93,6 @@
 			this.target
 				.removeClass(
 					classNames.target + ' ' +
-					classNames.targetCollapsed + ' ' +
 					classNames.transition
 				)
 				.off( transitionEnd )
@@ -189,9 +187,6 @@
 
 			evt.data.anchor
 				.attr( 'aria-expanded', false );
-
-			evt.data.target
-				.attr( 'aria-hidden', true );
 			
 			var targetIsVisible = evt.data.target.is(":visible");
 			if( targetIsVisible ) {
@@ -206,7 +201,8 @@
 						return;
 					}
 					evt.data.target
-						.addClass( classNames.transition + ' ' + classNames.targetCollapsed )
+						.addClass( classNames.transition )
+						.attr( 'aria-hidden', true )
 						.css( 'height', '' );
 				}, 50 );
 
@@ -227,11 +223,11 @@
 				.attr( 'aria-expanded', true );
 			
 			evt.data.target
-				.css( 'display', 'block' )
-				.attr( 'aria-hidden', false );
+				.css( 'display', 'block' );
 
 			if( evt.data.isFirst ) {
 				evt.data.isFirst = false;
+				evt.data.target.attr( 'aria-hidden', false );
 				return;
 			}
 
@@ -241,7 +237,7 @@
 				}
 				evt.data.target
 					.addClass( classNames.transition )
-					.removeClass( classNames.targetCollapsed )
+					.attr( 'aria-hidden', false )
 					.css( {
 							'height': evt.data.target.data('height') + 'px'
 						} );
