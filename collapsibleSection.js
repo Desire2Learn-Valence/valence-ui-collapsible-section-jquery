@@ -22,7 +22,6 @@
 
 	var classNames = {
 			collapsed: 'vui-heading-collapsible-collapsed',
-			hover: 'vui-heading-collapsible-h',
 			target: 'vui-heading-collapsible-target',
 			transition: 'vui-heading-collapsible-transition'
 		};
@@ -155,8 +154,6 @@
 			var isCollapsed = evt.data.elem
 				.is('.vui-heading-collapsible-collapsed');
 
-			evt.data.elem.removeClass( classNames.hover );
-
 			evt.data.icon.attr(
 					'class',
 					isCollapsed ? 'vui-icon-expand' : 'vui-icon-collapse'
@@ -251,8 +248,6 @@
 
 			var isCollapsed = evt.data.elem
 				.is('.vui-heading-collapsible-collapsed');
-
-			evt.data.elem.addClass( classNames.hover );
 
 			evt.data.icon.attr(
 					'class',
