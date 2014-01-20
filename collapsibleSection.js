@@ -215,6 +215,9 @@
 					if( !evt.data ) {
 						return;
 					}
+					if( !forceTransition ) {
+						forceTransition = evt.data.me.target.data('height') === 0;
+					}
 					evt.data.me.target
 						.addClass( classNames.transition )
 						.attr( 'aria-hidden', true )
@@ -246,12 +249,14 @@
 					if( !evt.data ) {
 						return;
 					}
+					var force = evt.data.me.target.height() == 
+						evt.data.me.target.data('height');
 					evt.data.me.target
 						.addClass( classNames.transition )
 						.attr( 'aria-hidden', false )
 						.css( { 'height': evt.data.me.target.data('height') + 'px' } );
 					evt.data.me._scroll( evt.data, true );
-					finishTransition( evt );
+					finishTransition( evt, force );
 				}, 50 );
 
 		},
