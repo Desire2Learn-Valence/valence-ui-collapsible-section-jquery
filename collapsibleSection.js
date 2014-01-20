@@ -22,12 +22,21 @@
 
 	var classNames = {
 			changed: 'vui-heading-collapsible-changed',
-			collapsed: 'vui-heading-collapsible-collapsed',
 			target: 'vui-heading-collapsible-target',
 			transition: 'vui-heading-collapsible-transition'
 		};
 
 	var transitionEnd = 'transitionend.vui webkitTransitionEnd.vui';
+
+	var hasTransitions = 'transition' in document.body.style ||
+		'webkitTransition' in document.body.style ||
+		'MozTransition' in document.body.style;
+	var finishTransition = function( evt, force ) {
+			if( !hasTransitions || force ) {
+				evt.originalEvent = { propertyName: 'height' };
+				evt.data.me._handleTransitionEnd( evt );
+			}
+		};
 
 	var $ = vui.$;
 
@@ -45,30 +54,32 @@
 			this._createAnchor();
 
 			var evtData = {
-					anchor: this.anchor,
-					icon: this.icon,
-					elem: this.element,
-					isFirst: true,
-					isHover: false,
-					target: this.target
+					me: this,
+					inProgress: false,
+					isHover: false
 				};
 
 			this.element
 				.on( 'vui-collapse', evtData, this._handleCollapse )
 				.on( 'vui-expand', evtData, this._handleExpand )
-				.on( 'click.vui', this._handleClick )
+				.on( 'click.vui', evtData, this._handleClick )
 				.on( 'mouseover.vui', evtData, this._handleHover )
-				.on( 'mouseout.vui', evtData, this._handleBlur )
-				.trigger( targetInfo.isVisible ? 'vui-expand': 'vui-collapse' );
+				.on( 'mouseout.vui', evtData, this._handleBlur );
 
 			this.anchor
 				.attr( 'aria-controls', targetInfo.id )
+				.attr( 'aria-expanded', targetInfo.isVisible ? 'true' : 'false' )
 				.on( 'focus', evtData, this._handleHover )
 				.on( 'blur', evtData, this._handleBlur );
+
+			this.icon
+				.attr( 'class', targetInfo.isVisible ? 'vui-icon-collapse' : 'vui-icon-expand' );
 
 			this.target
 				.vui_changeTracker()
 				.addClass( classNames.target )
+				.attr( 'aria-hidden', targetInfo.isVisible ? 'false' : 'true' )
+				.css( 'display', targetInfo.isVisible ? 'block' : 'none' )
 				.on( transitionEnd, evtData, this._handleTransitionEnd )
 				.on( 'vui-expand', evtData, this._handleExpand )
 				.on( 'vui-change vui-restore', function() {
@@ -83,17 +94,13 @@
 		_destroy: function () {
 
 			this.element
-				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui' )
-				.removeClass( classNames.collapsed );
+				.off( 'vui-collapse vui-expand click.vui mouseover.vui mouseout.vui vui-collapsibleSection-done' );
 
 			this.icon.remove();
 			this.anchor.contents().unwrap();
 
 			this.target
-				.removeClass(
-					classNames.target + ' ' +
-					classNames.transition
-				)
+				.removeClass( classNames.target + ' ' + classNames.transition )
 				.off( transitionEnd + ' vui-expand vui-change vui-restore' )
 				.removeAttr( 'aria-hidden' )
 				.removeData( 'height' );
@@ -162,10 +169,9 @@
 
 			evt.data.isHover = false;
 
-			var isCollapsed = evt.data.elem
-				.is('.vui-heading-collapsible-collapsed');
+			var isCollapsed = evt.data.me.target.attr( 'aria-hidden' ) == 'true';
 
-			evt.data.icon.attr(
+			evt.data.me.icon.attr(
 					'class',
 					isCollapsed ? 'vui-icon-expand' : 'vui-icon-collapse'
 				);
@@ -174,81 +180,78 @@
 
 		_handleClick: function( evt ) {
 
-			var isCollapsed = $( this )
-				.is('.vui-heading-collapsible-collapsed');
+			var isCollapsed = evt.data.me.target.attr( 'aria-hidden' ) == 'true';
 			$( this ).trigger( isCollapsed ? 'vui-expand' : 'vui-collapse' );
 
 		},
 
 		_handleCollapse: function( evt ) {
 
-			evt.data.isFirst = false;
+			if( evt.data.inProgress ) {
+				return;
+			}
+			evt.data.inProgress = true;
 
-			evt.data.elem
-				.addClass( classNames.collapsed );
+			evt.data.me.icon.attr(
+					'class',
+					evt.data.isHover ? 'vui-icon-expand-h' : 'vui-icon-expand'
+				);
 
-			var className = evt.data.isHover ?
-				'vui-icon-expand-h' : 'vui-icon-expand';
-
-			evt.data.icon
-				.attr( 'class', className );
-
-			evt.data.anchor
+			evt.data.me.anchor
 				.attr( 'aria-expanded', false );
 			
-			var targetIsVisible = evt.data.target.is(":visible");
+			var forceTransition = false;
+			var targetIsVisible = evt.data.me.target.is(":visible");
 			if( targetIsVisible ) {
-				var targetHeight = evt.data.target.outerHeight( false );
-				evt.data.target
+				var targetHeight = evt.data.me.target.outerHeight( false );
+				evt.data.me.target
 					.data( 'height', targetHeight )
 					.css( 'height', targetHeight + 'px' );
+			} else {
+				forceTransition = true;
 			}
 
 			setTimeout( function() {
 					if( !evt.data ) {
 						return;
 					}
-					evt.data.target
+					evt.data.me.target
 						.addClass( classNames.transition )
 						.attr( 'aria-hidden', true )
 						.css( 'height', '' );
+					finishTransition( evt, forceTransition );
 				}, 50 );
 
 		},
 
 		_handleExpand: function( evt ) {
 
-			var className = evt.data.isHover ?
-				'vui-icon-collapse-h' : 'vui-icon-collapse';
-
-			evt.data.elem
-				.removeClass( classNames.collapsed );
-
-			evt.data.icon
-				.attr( 'class', className );
-
-			evt.data.anchor
-				.attr( 'aria-expanded', true );
-			
-			evt.data.target
-				.css( 'display', 'block' );
-
-			if( evt.data.isFirst ) {
-				evt.data.isFirst = false;
-				evt.data.target.attr( 'aria-hidden', false );
+			if( evt.data.inProgress ) {
 				return;
 			}
+			evt.data.inProgress = true;
+
+			evt.data.me.icon.attr(
+					'class',
+					evt.data.isHover ? 'vui-icon-collapse-h' : 'vui-icon-collapse'
+				);
+
+			evt.data.me.anchor
+				.attr( 'aria-expanded', true );
+			
+			evt.data.me.target
+				.css( 'display', 'block' );
 
 			setTimeout( function() {
-				if( !evt.data ) {
-					return;
-				}
-				evt.data.target
-					.addClass( classNames.transition )
-					.attr( 'aria-hidden', false )
-					.css( {
-							'height': evt.data.target.data('height') + 'px'
-						} );
+					if( !evt.data ) {
+						return;
+					}
+					evt.data.me.target
+						.addClass( classNames.transition )
+						.attr( 'aria-hidden', false )
+						.css( { 'height': evt.data.me.target.data('height') + 'px' } );
+					evt.data.me._scroll( evt.data, true );
+					finishTransition( evt );
 				}, 50 );
 
 		},
@@ -257,10 +260,8 @@
 
 			evt.data.isHover = true;
 
-			var isCollapsed = evt.data.elem
-				.is('.vui-heading-collapsible-collapsed');
-
-			evt.data.icon.attr(
+			var isCollapsed = evt.data.me.target.attr( 'aria-hidden' ) == 'true';
+			evt.data.me.icon.attr(
 					'class',
 					isCollapsed ? 'vui-icon-expand-h' : 'vui-icon-collapse-h'
 				);
@@ -273,14 +274,39 @@
 				return;
 			}
 
-			evt.data.target.removeClass( classNames.transition );
+			evt.data.inProgress = false;
 
-			var isCollapsed = evt.data.elem
-				.is('.vui-heading-collapsible-collapsed');
+			evt.data.me.target.removeClass( classNames.transition );
+
+			var isCollapsed = evt.data.me.target.attr( 'aria-hidden' ) == 'true';
 			if( isCollapsed ) {
-				evt.data.target.css( 'display', 'none' );
+				evt.data.me.target.css( 'display', 'none' );
 			} else {
-				evt.data.target.css( 'height', '' );
+				evt.data.me.target.css( 'height', '' );
+				evt.data.me._scroll( evt.data, false );
+			}
+
+			evt.data.me.element.trigger( 'vui-collapsibleSection-done' );
+
+		},
+
+		_scroll: function( data, keepScrolling ) {
+
+			var targetBottom = data.me.target.offset().top +
+				data.me.target.height() + 50;
+			var scrollTop = $( window ).scrollTop();
+			var windowBottom = scrollTop + $( window ).height();
+
+			var diff = targetBottom - windowBottom;
+			if( diff > 0 ) {
+				window.scrollTo( 0, scrollTop + diff );
+			}
+
+			if( keepScrolling ) {
+				setTimeout(
+						function() { data.me._scroll( data, true ); },
+						10
+					);
 			}
 
 		}
