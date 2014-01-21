@@ -28,14 +28,17 @@
 
 	var transitionEnd = 'transitionend.vui webkitTransitionEnd.vui';
 
-	var hasTransitions = 'transition' in document.body.style ||
-		'webkitTransition' in document.body.style ||
-		'MozTransition' in document.body.style;
 	var finishTransition = function( evt, force ) {
+
+			var hasTransitions = 'transition' in document.body.style ||
+				'webkitTransition' in document.body.style ||
+				'MozTransition' in document.body.style;
+
 			if( !hasTransitions || force ) {
 				evt.originalEvent = { propertyName: 'height' };
 				evt.data.me._handleTransitionEnd( evt );
 			}
+
 		};
 
 	var $ = vui.$;
