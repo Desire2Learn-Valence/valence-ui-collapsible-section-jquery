@@ -59,7 +59,8 @@
 			var evtData = {
 					me: this,
 					inProgress: false,
-					isHover: false
+					isHover: false,
+					scrollTimeout: null
 				};
 
 			this.element
@@ -300,6 +301,9 @@
 
 		_scroll: function( data, keepScrolling ) {
 
+			clearTimeout( data.scrollTimeout );
+			data.scrollTimeout = null;
+
 			var targetBottom = data.me.target.offset().top +
 				data.me.target.height() + 50;
 			var scrollTop = $( window ).scrollTop();
@@ -311,7 +315,7 @@
 			}
 
 			if( keepScrolling ) {
-				setTimeout(
+				data.scrollTimeout = setTimeout(
 						function() { data.me._scroll( data, true ); },
 						10
 					);
