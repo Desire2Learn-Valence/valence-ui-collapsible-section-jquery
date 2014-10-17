@@ -1,4 +1,6 @@
-@import '../../core/core';
+@import 'node_modules/vui-typography/typography';
+@import 'node_modules/vui-change-tracking-jquery/changeTracking';
+@import 'node_modules/vui-focus/focus';
 
 .vui-heading-collapsible {
 	user-select: none;
@@ -7,7 +9,7 @@
 .vui-heading-2.vui-heading-collapsible,
 .vui-heading-3.vui-heading-collapsible,
 .vui-heading-4.vui-heading-collapsible {
-	margin: 0 0 @headingBottomMargin 0;
+	margin: 0 0 @vui-headingBottomMargin 0;
 	padding-bottom: 0;
 }
 
@@ -19,7 +21,7 @@
 
 .vui-heading-collapsible-target {
 	overflow: hidden;
-	margin-bottom: @headingBottomMargin;
+	margin-bottom: @vui-headingBottomMargin;
 }
 
 .vui-heading-collapsible-target[aria-hidden="true"] {
@@ -43,12 +45,12 @@
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"] {
-	background-color: @changedColour;
+	background-color: @vui-changedColour;
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:hover,
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:focus {
-	background-color: @changedColourHover;
+	background-color: @vui-changedColourHover;
 }
 
 .vui-heading-collapsible > a > span {
@@ -61,5 +63,5 @@
 }
 
 .vui-heading-collapsible > a:focus > span {
-	.focusOutline();
+	#vui.focusOutline();
 }
