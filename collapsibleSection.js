@@ -1,24 +1,8 @@
 /*jslint browser: true*/
 
-(function( vui ) {
+(function() {
 
 	'use strict';
-
-	// Check if the provided vui global is defined, otherwise try to require it if
-	// we're in a CommonJS environment; otherwise we'll just fail out
-	if( vui === undefined ) {
-		if( typeof require === 'function' ) {
-			vui = require('../../core');
-		} else {
-			throw new Error('load vui first');
-		}
-	}
-
-	// Export the vui object if we're in a CommonJS environment.
-	// It will already be on the window otherwise
-	if( typeof module === 'object' && typeof module.exports === 'object' ) {
-		module.exports = vui;
-	}
 
 	var classNames = {
 			changed: 'vui-heading-collapsible-changed',
@@ -40,8 +24,6 @@
 			}
 
 		};
-
-	var $ = vui.$;
 
 	$.widget( 'vui.vui_collapsibleSection', {
 
@@ -203,7 +185,7 @@
 
 			evt.data.me.anchor
 				.attr( 'aria-expanded', false );
-			
+
 			var forceTransition = false;
 			var targetIsVisible = evt.data.me.target.is(":visible");
 			if( targetIsVisible ) {
@@ -245,7 +227,7 @@
 
 			evt.data.me.anchor
 				.attr( 'aria-expanded', true );
-			
+
 			evt.data.me.target
 				.css( 'display', 'block' );
 
@@ -253,7 +235,7 @@
 					if( !evt.data ) {
 						return;
 					}
-					var force = evt.data.me.target.height() == 
+					var force = evt.data.me.target.height() ==
 						evt.data.me.target.data('height');
 					evt.data.me.target
 						.addClass( classNames.transition )
@@ -325,11 +307,4 @@
 
 	} );
 
-	vui.addClassInitializer(
-			'vui-heading-collapsible',
-			function( node ) {
-				$( node ).vui_collapsibleSection();
-			}
-		);
-
-} )( window.vui );
+} )();
