@@ -30,7 +30,7 @@
     "gulp-jshint": "^1.8.5",
     "vui-change-tracking-jquery": "^0.0.2",
     "vui-focus": "^0.2.1",
-    "vui-helpers": "^0.3.0",
+    "vui-helpers": "^0.3.4",
     "vui-typography": "^0.1.1"
   }
 }

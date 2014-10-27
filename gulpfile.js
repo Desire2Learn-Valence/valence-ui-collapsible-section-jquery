@@ -44,9 +44,6 @@ gulp.task( 'test', [ 'lib' ], function () {
 		],
 		preprocessors: {
 			'collapsibleSection.js': ['coverage']
-		},
-		coverageReporter: {
-			type: 'lcov', dir: 'test/output/coverage/'
 		}
 	} ) ;
 } );
