@@ -1,7 +1,7 @@
 ( function() {
 	'use strict';
 
-	describe( 'vui', function() {
+	describe( 'vui.collapsibleSection', function() {
 
 		var node;
 
@@ -14,13 +14,39 @@
 			document.body.removeChild( node );
 		} );
 
-		describe( 'collapsible section', function() {
+		describe( 'create', function() {
+
+			var $heading, $content;
 
 			beforeEach( function () {
+				$heading = $( "<h2 class='vui-heading-collapsible' data-target='content'>some heading</h2>" )
+					.appendTo( node );
+				$content = $( "<div id='content' style='display:none;'>some content</div>" )
+					.appendTo( node );
 			} );
 
-			it( 'todo', function() {
-				expect( true ).toBe( true );
+			it( 'binds the heading and collapsible content elements using widget method', function() {
+				$heading.vui_collapsibleSection();
+				expect( $heading.data( 'vui-vui_collapsibleSection' ) ).toBeDefined();
+			} );
+
+		} );
+
+		describe( 'destroy', function() {
+
+			var $heading, $content;
+
+			beforeEach( function () {
+				$heading = $( "<h2 class='vui-heading-collapsible' data-target='content'>some heading</h2>" )
+					.appendTo( node );
+				$content = $( "<div id='content' style='display:none;'>some content</div>" )
+					.appendTo( node );
+				$heading.vui_collapsibleSection();
+			} );
+
+			it( 'unbinds input from widget when destroy is called', function() {
+				$heading.vui_collapsibleSection( 'destroy' );
+				expect( $heading.data( 'vui-vui_collapsibleSection' ) ).not.toBeDefined();
 			} );
 
 		} );
