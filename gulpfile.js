@@ -38,6 +38,8 @@ gulp.task( 'test', [ 'lib' ], function () {
 			'lib/jquery/jquery.min.js',
 			'lib/jquery.ui/ui/jquery.ui.core.js',
 			'lib/jquery.ui/ui/jquery.ui.widget.js',
+			'node_modules/vui-change-tracking-jquery/changeTracker.js',
+			'node_modules/vui-change-tracking-jquery/changeTracking.js',
 			'collapsibleSection.js',
 			'test/**/*Spec.js',
 			'collapsibleSection.css'
