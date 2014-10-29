@@ -93,7 +93,7 @@
 				$heading1.vui_collapsibleSection();
 			} );
 
-			it( 'unbinds input from widget when destroy is called', function() {
+			it( 'unbinds widget when destroy is called', function() {
 				$heading1.vui_collapsibleSection( 'destroy' );
 				expect( $heading1.data( 'vui-vui_collapsibleSection' ) )
 					.not.toBeDefined();
