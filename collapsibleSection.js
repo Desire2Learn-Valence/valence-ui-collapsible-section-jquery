@@ -59,7 +59,7 @@
 				.on( 'blur', evtData, this._handleBlur );
 
 			this.icon
-				.attr( 'class', targetInfo.isVisible ? 'vui-icon-collapse' : 'vui-icon-expand' );
+				.attr( 'class', targetInfo.isVisible ? 'vui-heading-collapsible-icon-collapse' : 'vui-heading-collapsible-icon-expand' );
 
 			this.target
 				.vui_changeTracker()
@@ -159,7 +159,7 @@
 
 			evt.data.me.icon.attr(
 					'class',
-					isCollapsed ? 'vui-icon-expand' : 'vui-icon-collapse'
+					isCollapsed ? 'vui-heading-collapsible-icon-expand' : 'vui-heading-collapsible-icon-collapse'
 				);
 
 		},
@@ -180,7 +180,7 @@
 
 			evt.data.me.icon.attr(
 					'class',
-					evt.data.isHover ? 'vui-icon-expand-h' : 'vui-icon-expand'
+					evt.data.isHover ? 'vui-heading-collapsible-icon-expand-h' : 'vui-heading-collapsible-icon-expand'
 				);
 
 			evt.data.me.anchor
@@ -222,7 +222,7 @@
 
 			evt.data.me.icon.attr(
 					'class',
-					evt.data.isHover ? 'vui-icon-collapse-h' : 'vui-icon-collapse'
+					evt.data.isHover ? 'vui-heading-collapsible-icon-collapse-h' : 'vui-heading-collapsible-icon-collapse'
 				);
 
 			evt.data.me.anchor
@@ -254,7 +254,7 @@
 			var isCollapsed = evt.data.me.target.attr( 'aria-hidden' ) == 'true';
 			evt.data.me.icon.attr(
 					'class',
-					isCollapsed ? 'vui-icon-expand-h' : 'vui-icon-collapse-h'
+					isCollapsed ? 'vui-heading-collapsible-icon-expand-h' : 'vui-heading-collapsible-icon-collapse-h'
 				);
 
 		},
