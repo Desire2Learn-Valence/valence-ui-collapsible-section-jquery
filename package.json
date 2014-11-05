@@ -34,6 +34,6 @@
     "gulp-bower": "^0.0.6",
     "gulp-coveralls": "^0.1.3",
     "gulp-jshint": "^1.8.5",
-    "vui-helpers": "^0.3.4"
+    "vui-helpers": "^0.4.0"
   }
 }
