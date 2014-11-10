@@ -1,6 +1,6 @@
 {
   "name": "vui-collapsible-section-jquery",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "jQuery-based widget representing a collapsible section of content",
   "main": "collapsibleSection.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Desire2Learn-Valence/valence-ui-collapsible-section-jquery.git"
+    "url": "https://github.com/Brightspace/valence-ui-collapsible-section-jquery.git"
   },
   "keywords": [
     "vui",
@@ -19,9 +19,9 @@
   "author": "D2L Corporation",
   "license": "Apache 2.0",
   "bugs": {
-    "url": "https://github.com/Desire2Learn-Valence/valence-ui-collapsible-section-jquery/issues"
+    "url": "https://github.com/Brightspace/valence-ui-collapsible-section-jquery/issues"
   },
-  "homepage": "https://github.com/Desire2Learn-Valence/valence-ui-collapsible-section-jquery",
+  "homepage": "https://github.com/Brightspace/valence-ui-collapsible-section-jquery",
   "dependencies": {
     "vui-change-tracking-jquery": "^0.0.2",
     "vui-focus": "^0.2.1",
