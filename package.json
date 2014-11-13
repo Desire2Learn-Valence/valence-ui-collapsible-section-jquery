@@ -1,6 +1,6 @@
 {
   "name": "vui-collapsible-section-jquery",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "jQuery-based widget representing a collapsible section of content",
   "main": "collapsibleSection.js",
   "scripts": {
@@ -23,10 +23,10 @@
   },
   "homepage": "https://github.com/Brightspace/valence-ui-collapsible-section-jquery",
   "dependencies": {
-    "vui-change-tracking-jquery": "^0.0.2",
-    "vui-focus": "^0.2.1",
+    "vui-change-tracking-jquery": "^0.1.0",
+    "vui-focus": "^0.3.0",
     "vui-icons": "^0.2.0",
-    "vui-typography": "^0.1.1"
+    "vui-typography": "^0.2.0"
   },
   "devDependencies": {
     "del": "^0.1.3",

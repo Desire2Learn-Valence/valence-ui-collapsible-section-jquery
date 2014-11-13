@@ -10,7 +10,7 @@
 .vui-heading-2.vui-heading-collapsible,
 .vui-heading-3.vui-heading-collapsible,
 .vui-heading-4.vui-heading-collapsible {
-	margin: 0 0 @vui-headingBottomMargin 0;
+	margin: 0 0 @vui-heading-bottomMargin 0;
 	padding-bottom: 0;
 }
 
@@ -22,7 +22,7 @@
 
 .vui-heading-collapsible-target {
 	overflow: hidden;
-	margin-bottom: @vui-headingBottomMargin;
+	margin-bottom: @vui-heading-bottomMargin;
 }
 
 .vui-heading-collapsible-target[aria-hidden="true"] {
@@ -46,12 +46,12 @@
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"] {
-	background-color: @vui-changedColour;
+	background-color: @vui-changed-color;
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:hover,
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:focus {
-	background-color: @vui-changedColourHover;
+	background-color: @vui-changed-color-hover;
 }
 
 .vui-heading-collapsible > a > span {
@@ -64,7 +64,7 @@
 }
 
 .vui-heading-collapsible > a:focus > span {
-	#vui.focusOutline();
+	#vui.focus-outline();
 }
 
 .vui-heading-collapsible-icon-collapse {
