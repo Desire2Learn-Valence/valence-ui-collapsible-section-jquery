@@ -1,6 +1,6 @@
 {
   "name": "vui-collapsible-section-jquery",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "jQuery-based widget representing a collapsible section of content",
   "main": "collapsibleSection.js",
   "scripts": {
@@ -25,7 +25,7 @@
   "dependencies": {
     "vui-change-tracking-jquery": "^0.1.0",
     "vui-focus": "^0.4.0",
-    "vui-icons": "^0.2.1",
+    "vui-icons": "^0.3.0",
     "vui-typography": "^0.3.0"
   },
   "devDependencies": {
