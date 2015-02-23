@@ -8,9 +8,9 @@ The **vui-collapsible-section-jquery** library provides a jQuery-based widget re
 #### Coding styles
 See the [VUI Best Practices & Style Guide](https://github.com/Brightspace/valence-ui-docs/wiki/Best-Practices-&-Style-Guide) for information on VUI naming conventions, plus information about the [EditorConfig](http://editorconfig.org) rules used in this repo.
 
-[npm-url]: https://npmjs.org/package/vui-collapsible-section-jquery
+[npm-url]: https://npmjs.org/package/vui-collapsible-section-
 [npm-image]: https://img.shields.io/npm/v/vui-collapsible-section-jquery.png
-[ci-image]: https://travis-ci.org/Brightspace/valence-ui-collapsible-section-jquery.svg?branch=master
-[ci-url]: https://travis-ci.org/Brightspace/valence-ui-collapsible-section-jquery
+[ci-image]: https://travis-ci.org/Brightspace/jquery-valence-ui-collapsible-section.svg?branch=master
+[ci-url]: https://travis-ci.org/Brightspace/jquery-valence-ui-collapsible-section
 [coverage-image]: https://img.shields.io/coveralls/Brightspace/valence-ui-collapsible-section-jquery.svg
 [coverage-url]: https://coveralls.io/r/Brightspace/valence-ui-collapsible-section-jquery?branch=master
