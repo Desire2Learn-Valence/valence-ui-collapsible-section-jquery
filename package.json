@@ -1,6 +1,6 @@
 {
   "name": "jquery-vui-collapsible-section",
-  "version": "0.3.0",
+  "version": "0.3.2",
   "description": "jQuery-based widget representing a collapsible section of content",
   "main": "collapsibleSection.js",
   "scripts": {
