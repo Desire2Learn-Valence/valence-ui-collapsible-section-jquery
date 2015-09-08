@@ -1,7 +1,7 @@
-@import 'node_modules/vui-typography/typography';
-@import 'node_modules/vui-change-tracking-jquery/changeTracking';
-@import 'node_modules/vui-focus/focus';
-@import 'node_modules/vui-icons/icons';
+@import 'bower_components/vui-typography/typography';
+@import 'bower_components/jquery-vui-change-tracking/changeTracking';
+@import 'bower_components/vui-focus/focus';
+@import 'bower_components/vui-icons/icons';
 
 .vui-heading-collapsible {
 	user-select: none;
@@ -10,7 +10,7 @@
 .vui-heading-2.vui-heading-collapsible,
 .vui-heading-3.vui-heading-collapsible,
 .vui-heading-4.vui-heading-collapsible {
-	margin: 0 0 @vui-heading-bottomMargin 0;
+	margin: 0 0 $vui-heading-bottomMargin 0;
 	padding-bottom: 0;
 }
 
@@ -22,7 +22,7 @@
 
 .vui-heading-collapsible-target {
 	overflow: hidden;
-	margin-bottom: @vui-heading-bottomMargin;
+	margin-bottom: $vui-heading-bottomMargin;
 }
 
 .vui-heading-collapsible-target[aria-hidden="true"] {
@@ -46,12 +46,12 @@
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"] {
-	background-color: @vui-changed-color;
+	background-color: $vui-changed-color;
 }
 
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:hover,
 .vui-heading-collapsible > .vui-heading-collapsible-changed[aria-expanded="false"]:focus {
-	background-color: @vui-changed-color-hover;
+	background-color: $vui-changed-color-hover;
 }
 
 .vui-heading-collapsible > a > span {
@@ -64,7 +64,7 @@
 }
 
 .vui-heading-collapsible > a:focus > span {
-	#vui.focusOutline();
+	@include vui-focus-outline();
 }
 
 .vui-heading-collapsible-icon-collapse,
@@ -77,17 +77,17 @@
 }
 
 .vui-heading-collapsible-icon-collapse {
-	#vui.Icon.collapse();
+	@include vui-icon-collapse();
 }
 
 .vui-heading-collapsible-icon-collapse-h {
-	#vui.Icon.collapseHover();
+	@include vui-icon-collapse-hover();
 }
 
 .vui-heading-collapsible-icon-expand {
-	#vui.Icon.expand();
+	@include vui-icon-expand();
 }
 
 .vui-heading-collapsible-icon-expand-h {
-	#vui.Icon.expandHover();
+	@include vui-icon-expand-hover();
 }

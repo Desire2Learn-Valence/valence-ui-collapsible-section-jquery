@@ -1,25 +1,7 @@
-var bower = require('gulp-bower'),
-	coveralls = require('gulp-coveralls'),
-	del = require('del'),
+var coveralls = require('gulp-coveralls'),
 	gulp = require('gulp'),
 	jshint = require('gulp-jshint'),
 	vui = require('vui-helpers');
-
-gulp.task( 'clean', function( cb ) {
-	del( [ 'collapsibleSection.css' ], cb );
-} );
-
-gulp.task( 'lib', function() {
-	return bower('lib/');
-} );
-
-gulp.task( 'css', function () {
-	return vui.makeCss(
-		'collapsibleSection.css.less',
-		'collapsibleSection.css',
-		{ 'lintOpts' : '.csslintrc' }
-	);
-} );
 
 gulp.task( 'jshint', function() {
 	return gulp.src( ['gulpfile.js', 'collapsibleSection.js', 'test/*.js'] )
@@ -32,14 +14,14 @@ gulp.task( 'coverage', function() {
 		.pipe( coveralls() );
 } );
 
-gulp.task( 'test', [ 'lib' ], function () {
+gulp.task( 'test', ['jshint'], function () {
 	return vui.test( {
 		files: [
-			'lib/jquery/jquery.min.js',
-			'lib/jquery.ui/ui/jquery.ui.core.js',
-			'lib/jquery.ui/ui/jquery.ui.widget.js',
-			'node_modules/vui-change-tracking-jquery/changeTracker.js',
-			'node_modules/vui-change-tracking-jquery/changeTracking.js',
+			'bower_components/jquery/jquery.min.js',
+			'bower_components/jquery.ui/ui/jquery.ui.core.js',
+			'bower_components/jquery.ui/ui/jquery.ui.widget.js',
+			'bower_components/jquery-vui-change-tracking/changeTracker.js',
+			'bower_components/jquery-vui-change-tracking/changeTracking.js',
 			'collapsibleSection.js',
 			'test/**/*Spec.js',
 			'collapsibleSection.css'
@@ -48,8 +30,4 @@ gulp.task( 'test', [ 'lib' ], function () {
 			'collapsibleSection.js': ['coverage']
 		}
 	} ) ;
-} );
-
-gulp.task( 'default', [ 'clean' ], function() {
-	gulp.start( 'css', 'jshint' );
 } );
