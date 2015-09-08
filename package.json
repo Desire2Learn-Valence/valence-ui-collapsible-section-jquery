@@ -1,10 +1,16 @@
 {
   "name": "jquery-vui-collapsible-section",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "jQuery-based widget representing a collapsible section of content",
   "main": "collapsibleSection.js",
   "scripts": {
-    "test": "gulp && gulp test"
+    "prebuild": "rimraf collapsibleSection.css",
+    "build:autoprefix": "postcss -c postcss.config.json",
+    "build:sass": "node-sass --output-style expanded collapsibleSection.css.scss collapsibleSection.css",
+    "build": "npm run build:sass && npm run build:autoprefix",
+    "postinstall": "./node_modules/.bin/bower install",
+    "pretest": "npm run build",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -17,23 +23,22 @@
     "jquery"
   ],
   "author": "D2L Corporation",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/Brightspace/jquery-valence-ui-collapsible-section/issues"
   },
   "homepage": "https://github.com/Brightspace/jquery-valence-ui-collapsible-section",
   "dependencies": {
-    "vui-change-tracking-jquery": "^0.1.0",
-    "vui-focus": "^0.4.0",
-    "vui-icons": "^0.3.0",
-    "vui-typography": "^0.3.0"
+    "bower": "^1.5.2"
   },
   "devDependencies": {
-    "del": "^0.1.3",
+    "autoprefixer": "^6.0.2",
     "gulp": "^3.8.8",
-    "gulp-bower": "^0.0.6",
     "gulp-coveralls": "^0.1.3",
     "gulp-jshint": "^1.8.5",
+    "node-sass": "^3.3.2",
+    "postcss-cli": "^2.1.0",
+    "rimraf": "^2.4.3",
     "vui-helpers": "^0.4.0"
   }
 }
