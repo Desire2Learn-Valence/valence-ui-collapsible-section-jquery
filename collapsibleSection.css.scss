@@ -1,4 +1,3 @@
-@import 'bower_components/vui-typography/typography';
 @import 'bower_components/jquery-vui-change-tracking/changeTracking';
 @import 'bower_components/vui-focus/focus';
 @import 'bower_components/vui-icons/icons';
@@ -10,7 +9,7 @@
 .vui-heading-2.vui-heading-collapsible,
 .vui-heading-3.vui-heading-collapsible,
 .vui-heading-4.vui-heading-collapsible {
-	margin: 0 0 $vui-heading-bottomMargin 0;
+	margin: 0 0 15px 0;
 	padding-bottom: 0;
 }
 
@@ -22,7 +21,7 @@
 
 .vui-heading-collapsible-target {
 	overflow: hidden;
-	margin-bottom: $vui-heading-bottomMargin;
+	margin-bottom: 15px;
 }
 
 .vui-heading-collapsible-target[aria-hidden="true"] {
