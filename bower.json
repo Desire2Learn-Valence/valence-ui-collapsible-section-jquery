@@ -15,7 +15,7 @@
   "dependencies": {
     "jquery-vui-change-tracking": "~0.4.0",
     "vui-focus": "~0.7.1",
-    "vui-icons": "~1.0.0"
+    "vui-icons": "~1.1.0"
   },
   "devDependencies": {
     "jquery": "~2.0.3",
