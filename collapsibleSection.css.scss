@@ -1,6 +1,5 @@
 @import 'bower_components/jquery-vui-change-tracking/changeTracking.scss';
 @import 'bower_components/vui-focus/focus.scss';
-@import 'bower_components/vui-icons/icons.scss';
 
 .vui-heading-collapsible {
 	user-select: none;
@@ -75,18 +74,26 @@
 	line-height: 0;
 }
 
-.vui-heading-collapsible-icon-collapse {
-	@include vui-icon-collapse();
+.vui-heading-collapsible-icon-collapse:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAD1BMVEX///+ZmZmZmZmZmZmZmZnupePXAAAABHRSTlMAfoGCzNJoxgAAACVJREFUCNdjYCAPMDkyMIgYgFgqAoxOUCERBYikihNMlQKp5gIAje8B/ngg/YoAAAAASUVORK5CYII=");
 }
 
-.vui-heading-collapsible-icon-collapse-h {
-	@include vui-icon-collapse-hover();
+.vui-heading-collapsible-icon-collapse-h:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAD1BMVEX///9mZmZmZmZmZmZmZmYu6doyAAAABHRSTlMAfoGCzNJoxgAAACVJREFUCNdjYCAPMDkyMIgYgFgqAoxOUCERBYikihNMlQKp5gIAje8B/ngg/YoAAAAASUVORK5CYII=");
 }
 
-.vui-heading-collapsible-icon-expand {
-	@include vui-icon-expand();
+.vui-heading-collapsible-icon-expand:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAElBMVEX///+ZmZmZmZmZmZmZmZmZmZl/+pTNAAAABXRSTlMAfn+Agbca1Y4AAAAnSURBVAjXY2DACwxgjGAYQxUmxIQpJOoAoRlD0AQYYAIMDvjtYwAA2yoDFsdQdZEAAAAASUVORK5CYII=");
 }
 
-.vui-heading-collapsible-icon-expand-h {
-	@include vui-icon-expand-hover();
+[dir='rtl'] .vui-heading-collapsible-icon-expand:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAElBMVEX///+ZmZmZmZmZmZmZmZmZmZl/+pTNAAAABXRSTlMAfn+Agbca1Y4AAAApSURBVAjXY2AgAAygNHMAlGGqABUIQhNgcBWAMlgCGTCEYNoZHPBaBwDZhwMWIyRtZAAAAABJRU5ErkJggg==");
+}
+
+.vui-heading-collapsible-icon-expand-h:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAElBMVEX///9mZmZmZmZmZmZmZmZmZmahgyBVAAAABXRSTlMAfn+Agbca1Y4AAAAnSURBVAjXY2DACwxgjGAYQxUmxIQpJOoAoRlD0AQYYAIMDvjtYwAA2yoDFsdQdZEAAAAASUVORK5CYII=");
+}
+
+[dir='rtl'] .vui-heading-collapsible-icon-expand-h:before {
+  content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAElBMVEX///9mZmZmZmZmZmZmZmZmZmahgyBVAAAABXRSTlMAfn+Agbca1Y4AAAApSURBVAjXY2AgAAygNHMAlGGqABUIQhNgcBWAMlgCGTCEYNoZHPBaBwDZhwMWIyRtZAAAAABJRU5ErkJggg==");
 }
