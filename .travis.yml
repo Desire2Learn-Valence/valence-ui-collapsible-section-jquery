@@ -1,13 +1,13 @@
 language: node_js
 node_js:
-- '0.12'
+  - '0.12'
 sudo: false
 after_success:
-- gulp coverage
+  - gulp coverage
 deploy:
-  provider: npm
-  email: d2ltravisdeploy@d2l.com
-  api_key:
-    secure: MUSD1SVLfQcXILrDnCfPisvt9cT9IUWCvr/spGpIhutrA+yuh9Y15xTZVxF1VuErvrpSj6WtCxI36zxgsQdXSx1zQ+AoL6jliGO4rfb8Hd+E+s6Pim4hb78hPsIiOhzoexj0cWvvic21GXGSw0QeFo3qdid61tE4RuGs6VAk5xM=
+  provider: script
+  script: echo "npm credentials were revoked on 2018-07-12. We regenerated many
+    credentials, but this repository had no changes in at least 18 months and
+    was skipped. Reconfigure npm deployments. -omsmith"; exit 1
   on:
     tags: true
