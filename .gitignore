@@ -2,3 +2,4 @@ bower_components/
 node_modules/
 test/output/
 collapsibleSection.css
+package-lock.json
