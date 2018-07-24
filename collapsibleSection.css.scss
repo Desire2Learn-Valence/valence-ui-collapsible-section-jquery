@@ -1,5 +1,4 @@
 @import 'bower_components/jquery-vui-change-tracking/changeTracking.scss';
-@import 'bower_components/vui-focus/focus.scss';
 
 .vui-heading-collapsible {
 	user-select: none;
@@ -62,7 +61,9 @@
 }
 
 .vui-heading-collapsible > a:focus > span {
-	@include vui-focus-outline();
+	border-color: #94ccda;
+	box-shadow: 0 0 1px 0 #f2f2f2 inset, 0 0 1px 1px #94ccda;
+	outline-width: 0;
 }
 
 .vui-heading-collapsible-icon-collapse,
