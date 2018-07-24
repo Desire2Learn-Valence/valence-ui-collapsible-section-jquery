@@ -13,8 +13,7 @@
     "postcss.config.json"
   ],
   "dependencies": {
-    "jquery-vui-change-tracking": "^0.5.3",
-    "vui-focus": "~0.7.1"
+    "jquery-vui-change-tracking": "^0.6.0"
   },
   "devDependencies": {
     "jquery": "~2.0.3",

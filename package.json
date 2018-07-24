@@ -8,7 +8,7 @@
     "build:autoprefix": "postcss -c postcss.config.json",
     "build:sass": "node-sass --output-style expanded collapsibleSection.css.scss collapsibleSection.css",
     "build": "npm run build:sass && npm run build:autoprefix",
-    "postinstall": "./node_modules/.bin/bower install",
+    "postinstall": "bower install",
     "pretest": "npm run build",
     "test": "gulp test"
   },
